@@ -1,0 +1,8 @@
+{
+  "error_get_songs": "Failed to fetch songs",
+  "error_save_song": "Failed to save song",
+  "error_update_song": "Failed to update song",
+  "error_delete_song": "Failed to delete song",
+  "error_toggle_selection": "Failed to toggle selection",
+  "error_get_selected_songs": "Failed to get selected songs"
+}
