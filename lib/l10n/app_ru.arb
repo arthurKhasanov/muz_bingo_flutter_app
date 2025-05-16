@@ -1,0 +1,8 @@
+{
+  "error_get_songs": "Не удалось получить песни",
+  "error_save_song": "Не удалось сохранить песню",
+  "error_update_song": "Не удалось обновить песню",
+  "error_delete_song": "Не удалось удалить песню",
+  "error_toggle_selection": "Ошибка при переключении выбора",
+  "error_get_selected_songs": "Не удалось получить выбранные песни"
+}
