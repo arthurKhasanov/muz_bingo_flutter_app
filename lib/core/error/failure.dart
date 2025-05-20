@@ -1,12 +1,12 @@
 abstract class Failure {
-  final String message;
-  const Failure(this.message);
+  final String key;
+  const Failure(this.key);
 }
 
 class StorageFailure extends Failure {
-  const StorageFailure(super.message);
+  const StorageFailure(super.key);
 }
 
 class UnexpectedFailure extends Failure {
-  const UnexpectedFailure(super.message);
+  const UnexpectedFailure(super.key);
 }
