@@ -1,10 +1,10 @@
 name: muz_bingo_app
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: ^3.7.2
+  sdk: ">=3.1.3 <4.0.0"
 
 dependencies:
   flutter:
@@ -19,6 +19,13 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
+  flutter_bloc: ^9.1.1
+  bloc: ^9.0.0
+  bloc_test: ^10.0.0
+  pdf: ^3.11.3
+  gap: ^3.0.1
+  another_flushbar: ^1.12.30
+  pull_down_button: ^0.10.2
 
 dev_dependencies:
   flutter_test:
@@ -32,4 +39,4 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  generate: true 
+  generate: true

@@ -6,6 +6,7 @@
 import 'dart:async' as _i3;
 
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:muz_bingo_app/core/enums/fetch_songs_mode.dart' as _i5;
 import 'package:muz_bingo_app/data/model/song_model.dart' as _i4;
 import 'package:muz_bingo_app/data/songs_datasource/song_datasource.dart'
     as _i2;
@@ -34,19 +35,11 @@ class MockISongLocalDataSource extends _i1.Mock
   }
 
   @override
-  _i3.Future<List<_i4.SongModel>> getAllSongs() => (super.noSuchMethod(
+  _i3.Future<List<_i4.SongModel>> getAllSongs(_i5.FetchSongsMode? fetchMode) =>
+      (super.noSuchMethod(
         Invocation.method(
           #getAllSongs,
-          [],
-        ),
-        returnValue: _i3.Future<List<_i4.SongModel>>.value(<_i4.SongModel>[]),
-      ) as _i3.Future<List<_i4.SongModel>>);
-
-  @override
-  _i3.Future<List<_i4.SongModel>> getSelectedSongs() => (super.noSuchMethod(
-        Invocation.method(
-          #getSelectedSongs,
-          [],
+          [fetchMode],
         ),
         returnValue: _i3.Future<List<_i4.SongModel>>.value(<_i4.SongModel>[]),
       ) as _i3.Future<List<_i4.SongModel>>);
