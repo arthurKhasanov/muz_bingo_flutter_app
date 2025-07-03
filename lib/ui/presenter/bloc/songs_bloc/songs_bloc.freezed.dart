@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$SongsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(FetchSongsMode mode) getSongs,
+    required TResult Function() getSongs,
     required TResult Function(
             String artistName, String songName, bool isSelected)
         saveSong,
@@ -31,7 +31,7 @@ mixin _$SongsEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(FetchSongsMode mode)? getSongs,
+    TResult? Function()? getSongs,
     TResult? Function(String artistName, String songName, bool isSelected)?
         saveSong,
     TResult? Function(
@@ -43,7 +43,7 @@ mixin _$SongsEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(FetchSongsMode mode)? getSongs,
+    TResult Function()? getSongs,
     TResult Function(String artistName, String songName, bool isSelected)?
         saveSong,
     TResult Function(
@@ -107,8 +107,6 @@ abstract class _$$GetSongsImplCopyWith<$Res> {
   factory _$$GetSongsImplCopyWith(
           _$GetSongsImpl value, $Res Function(_$GetSongsImpl) then) =
       __$$GetSongsImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({FetchSongsMode mode});
 }
 
 /// @nodoc
@@ -118,55 +116,31 @@ class __$$GetSongsImplCopyWithImpl<$Res>
   __$$GetSongsImplCopyWithImpl(
       _$GetSongsImpl _value, $Res Function(_$GetSongsImpl) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? mode = null,
-  }) {
-    return _then(_$GetSongsImpl(
-      mode: null == mode
-          ? _value.mode
-          : mode // ignore: cast_nullable_to_non_nullable
-              as FetchSongsMode,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$GetSongsImpl implements _GetSongs {
-  const _$GetSongsImpl({required this.mode});
-
-  @override
-  final FetchSongsMode mode;
+  const _$GetSongsImpl();
 
   @override
   String toString() {
-    return 'SongsEvent.getSongs(mode: $mode)';
+    return 'SongsEvent.getSongs()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$GetSongsImpl &&
-            (identical(other.mode, mode) || other.mode == mode));
+        (other.runtimeType == runtimeType && other is _$GetSongsImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, mode);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$GetSongsImplCopyWith<_$GetSongsImpl> get copyWith =>
-      __$$GetSongsImplCopyWithImpl<_$GetSongsImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(FetchSongsMode mode) getSongs,
+    required TResult Function() getSongs,
     required TResult Function(
             String artistName, String songName, bool isSelected)
         saveSong,
@@ -176,13 +150,13 @@ class _$GetSongsImpl implements _GetSongs {
     required TResult Function(int index, int id) deleteSong,
     required TResult Function(int id) toggleSelection,
   }) {
-    return getSongs(mode);
+    return getSongs();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(FetchSongsMode mode)? getSongs,
+    TResult? Function()? getSongs,
     TResult? Function(String artistName, String songName, bool isSelected)?
         saveSong,
     TResult? Function(
@@ -191,13 +165,13 @@ class _$GetSongsImpl implements _GetSongs {
     TResult? Function(int index, int id)? deleteSong,
     TResult? Function(int id)? toggleSelection,
   }) {
-    return getSongs?.call(mode);
+    return getSongs?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(FetchSongsMode mode)? getSongs,
+    TResult Function()? getSongs,
     TResult Function(String artistName, String songName, bool isSelected)?
         saveSong,
     TResult Function(
@@ -208,7 +182,7 @@ class _$GetSongsImpl implements _GetSongs {
     required TResult orElse(),
   }) {
     if (getSongs != null) {
-      return getSongs(mode);
+      return getSongs();
     }
     return orElse();
   }
@@ -255,13 +229,7 @@ class _$GetSongsImpl implements _GetSongs {
 }
 
 abstract class _GetSongs implements SongsEvent {
-  const factory _GetSongs({required final FetchSongsMode mode}) =
-      _$GetSongsImpl;
-
-  FetchSongsMode get mode;
-  @JsonKey(ignore: true)
-  _$$GetSongsImplCopyWith<_$GetSongsImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  const factory _GetSongs() = _$GetSongsImpl;
 }
 
 /// @nodoc
@@ -352,7 +320,7 @@ class _$SaveSongImpl implements _SaveSong {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(FetchSongsMode mode) getSongs,
+    required TResult Function() getSongs,
     required TResult Function(
             String artistName, String songName, bool isSelected)
         saveSong,
@@ -368,7 +336,7 @@ class _$SaveSongImpl implements _SaveSong {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(FetchSongsMode mode)? getSongs,
+    TResult? Function()? getSongs,
     TResult? Function(String artistName, String songName, bool isSelected)?
         saveSong,
     TResult? Function(
@@ -383,7 +351,7 @@ class _$SaveSongImpl implements _SaveSong {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(FetchSongsMode mode)? getSongs,
+    TResult Function()? getSongs,
     TResult Function(String artistName, String songName, bool isSelected)?
         saveSong,
     TResult Function(
@@ -551,7 +519,7 @@ class _$UpdateSongImpl implements _UpdateSong {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(FetchSongsMode mode) getSongs,
+    required TResult Function() getSongs,
     required TResult Function(
             String artistName, String songName, bool isSelected)
         saveSong,
@@ -567,7 +535,7 @@ class _$UpdateSongImpl implements _UpdateSong {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(FetchSongsMode mode)? getSongs,
+    TResult? Function()? getSongs,
     TResult? Function(String artistName, String songName, bool isSelected)?
         saveSong,
     TResult? Function(
@@ -582,7 +550,7 @@ class _$UpdateSongImpl implements _UpdateSong {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(FetchSongsMode mode)? getSongs,
+    TResult Function()? getSongs,
     TResult Function(String artistName, String songName, bool isSelected)?
         saveSong,
     TResult Function(
@@ -727,7 +695,7 @@ class _$DeleteSongImpl implements _DeleteSong {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(FetchSongsMode mode) getSongs,
+    required TResult Function() getSongs,
     required TResult Function(
             String artistName, String songName, bool isSelected)
         saveSong,
@@ -743,7 +711,7 @@ class _$DeleteSongImpl implements _DeleteSong {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(FetchSongsMode mode)? getSongs,
+    TResult? Function()? getSongs,
     TResult? Function(String artistName, String songName, bool isSelected)?
         saveSong,
     TResult? Function(
@@ -758,7 +726,7 @@ class _$DeleteSongImpl implements _DeleteSong {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(FetchSongsMode mode)? getSongs,
+    TResult Function()? getSongs,
     TResult Function(String artistName, String songName, bool isSelected)?
         saveSong,
     TResult Function(
@@ -891,7 +859,7 @@ class _$ToggleSelectionImpl implements _ToggleSelection {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(FetchSongsMode mode) getSongs,
+    required TResult Function() getSongs,
     required TResult Function(
             String artistName, String songName, bool isSelected)
         saveSong,
@@ -907,7 +875,7 @@ class _$ToggleSelectionImpl implements _ToggleSelection {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(FetchSongsMode mode)? getSongs,
+    TResult? Function()? getSongs,
     TResult? Function(String artistName, String songName, bool isSelected)?
         saveSong,
     TResult? Function(
@@ -922,7 +890,7 @@ class _$ToggleSelectionImpl implements _ToggleSelection {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(FetchSongsMode mode)? getSongs,
+    TResult Function()? getSongs,
     TResult Function(String artistName, String songName, bool isSelected)?
         saveSong,
     TResult Function(
@@ -992,6 +960,7 @@ abstract class _ToggleSelection implements SongsEvent {
 /// @nodoc
 mixin _$SongsState {
   List<SongEntity> get songs => throw _privateConstructorUsedError;
+  List<SongEntity> get selectedSongs => throw _privateConstructorUsedError;
   SongsListStateStatus get status => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
@@ -1008,6 +977,7 @@ abstract class $SongsStateCopyWith<$Res> {
   @useResult
   $Res call(
       {List<SongEntity> songs,
+      List<SongEntity> selectedSongs,
       SongsListStateStatus status,
       String? errorMessage});
 }
@@ -1026,6 +996,7 @@ class _$SongsStateCopyWithImpl<$Res, $Val extends SongsState>
   @override
   $Res call({
     Object? songs = null,
+    Object? selectedSongs = null,
     Object? status = null,
     Object? errorMessage = freezed,
   }) {
@@ -1033,6 +1004,10 @@ class _$SongsStateCopyWithImpl<$Res, $Val extends SongsState>
       songs: null == songs
           ? _value.songs
           : songs // ignore: cast_nullable_to_non_nullable
+              as List<SongEntity>,
+      selectedSongs: null == selectedSongs
+          ? _value.selectedSongs
+          : selectedSongs // ignore: cast_nullable_to_non_nullable
               as List<SongEntity>,
       status: null == status
           ? _value.status
@@ -1056,6 +1031,7 @@ abstract class _$$SongsStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {List<SongEntity> songs,
+      List<SongEntity> selectedSongs,
       SongsListStateStatus status,
       String? errorMessage});
 }
@@ -1072,6 +1048,7 @@ class __$$SongsStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? songs = null,
+    Object? selectedSongs = null,
     Object? status = null,
     Object? errorMessage = freezed,
   }) {
@@ -1079,6 +1056,10 @@ class __$$SongsStateImplCopyWithImpl<$Res>
       songs: null == songs
           ? _value._songs
           : songs // ignore: cast_nullable_to_non_nullable
+              as List<SongEntity>,
+      selectedSongs: null == selectedSongs
+          ? _value._selectedSongs
+          : selectedSongs // ignore: cast_nullable_to_non_nullable
               as List<SongEntity>,
       status: null == status
           ? _value.status
@@ -1097,9 +1078,11 @@ class __$$SongsStateImplCopyWithImpl<$Res>
 class _$SongsStateImpl implements _SongsState {
   const _$SongsStateImpl(
       {final List<SongEntity> songs = const [],
+      final List<SongEntity> selectedSongs = const [],
       this.status = SongsListStateStatus.initial,
       this.errorMessage = null})
-      : _songs = songs;
+      : _songs = songs,
+        _selectedSongs = selectedSongs;
 
   final List<SongEntity> _songs;
   @override
@@ -1108,6 +1091,15 @@ class _$SongsStateImpl implements _SongsState {
     if (_songs is EqualUnmodifiableListView) return _songs;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_songs);
+  }
+
+  final List<SongEntity> _selectedSongs;
+  @override
+  @JsonKey()
+  List<SongEntity> get selectedSongs {
+    if (_selectedSongs is EqualUnmodifiableListView) return _selectedSongs;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_selectedSongs);
   }
 
   @override
@@ -1119,7 +1111,7 @@ class _$SongsStateImpl implements _SongsState {
 
   @override
   String toString() {
-    return 'SongsState(songs: $songs, status: $status, errorMessage: $errorMessage)';
+    return 'SongsState(songs: $songs, selectedSongs: $selectedSongs, status: $status, errorMessage: $errorMessage)';
   }
 
   @override
@@ -1128,14 +1120,20 @@ class _$SongsStateImpl implements _SongsState {
         (other.runtimeType == runtimeType &&
             other is _$SongsStateImpl &&
             const DeepCollectionEquality().equals(other._songs, _songs) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedSongs, _selectedSongs) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_songs), status, errorMessage);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_songs),
+      const DeepCollectionEquality().hash(_selectedSongs),
+      status,
+      errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -1147,11 +1145,14 @@ class _$SongsStateImpl implements _SongsState {
 abstract class _SongsState implements SongsState {
   const factory _SongsState(
       {final List<SongEntity> songs,
+      final List<SongEntity> selectedSongs,
       final SongsListStateStatus status,
       final String? errorMessage}) = _$SongsStateImpl;
 
   @override
   List<SongEntity> get songs;
+  @override
+  List<SongEntity> get selectedSongs;
   @override
   SongsListStateStatus get status;
   @override

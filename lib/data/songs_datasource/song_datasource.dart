@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 import 'package:muz_bingo_app/core/enums/fetch_songs_mode.dart';
-import 'package:muz_bingo_app/data/model/song_model.dart';
+import 'package:muz_bingo_app/data/model/songs/song_model.dart';
 
 abstract class ISongLocalDataSource {
   Future<List<SongModel>> getAllSongs(FetchSongsMode fetchMode);
@@ -37,8 +37,8 @@ class SongLocalDataSourceImpl implements ISongLocalDataSource {
   Future<void> toggleSelection(int id) async {
     final model = box.get(id);
     if (model != null) {
-      final updated =
-          SongModel(artistName: model.artistName, songName: model.songName, isSelected: !model.isSelected);
+      final updated = SongModel(
+          id: model.id, artistName: model.artistName, songName: model.songName, isSelected: !model.isSelected);
       await box.put(id, updated);
     }
   }

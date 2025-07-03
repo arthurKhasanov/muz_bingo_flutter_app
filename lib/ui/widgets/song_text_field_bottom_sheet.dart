@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:muz_bingo_app/domain/entity/song_entity.dart';
+import 'package:muz_bingo_app/domain/entity/song/song_entity.dart';
 import 'package:muz_bingo_app/ui/presenter/bloc/songs_bloc/songs_bloc.dart';
 import 'package:muz_bingo_app/utils/ui/app_flushbar.dart';
 
@@ -10,16 +10,17 @@ class SongTextFieldBottomSheetHelper {
   static void showAddSongBottomSheet(BuildContext screenContext, [SongEntity? song, int? index]) {
     showModalBottomSheet(
       context: screenContext,
+      isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
-      builder: (context) => SongTextFieldBottomSheet(screenContext, song: song, index: index),
+      builder: (context) => SongForm(screenContext, song: song, index: index),
     );
   }
 }
 
-class SongTextFieldBottomSheet extends StatefulWidget {
-  const SongTextFieldBottomSheet(
+class SongForm extends StatefulWidget {
+  const SongForm(
     this.screenContext, {
     super.key,
     required this.song,
@@ -31,10 +32,10 @@ class SongTextFieldBottomSheet extends StatefulWidget {
   final BuildContext screenContext;
 
   @override
-  State<SongTextFieldBottomSheet> createState() => _SongTextFieldBottomSheetState();
+  State<SongForm> createState() => _SongFormState();
 }
 
-class _SongTextFieldBottomSheetState extends State<SongTextFieldBottomSheet> {
+class _SongFormState extends State<SongForm> {
   late final TextEditingController songController;
   late final TextEditingController artistController;
   late bool isSelected;

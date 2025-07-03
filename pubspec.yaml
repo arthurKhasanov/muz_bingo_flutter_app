@@ -26,6 +26,11 @@ dependencies:
   gap: ^3.0.1
   another_flushbar: ^1.12.30
   pull_down_button: ^0.10.2
+  printing: ^5.14.2
+  auto_size_text: ^3.0.0
+  flutter_native_splash: ^2.4.6
+  flutter_launcher_icons: ^0.14.4
+  file_picker: ^10.2.0
 
 dev_dependencies:
   flutter_test:
@@ -40,3 +45,25 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+  assets:
+    - assets/images/default_card_background.png
+    - assets/fonts/Roboto-Regular.ttf
+
+flutter_native_splash:
+  color: "#EBD2D2"
+  image: assets/images/logo_splash.png
+  android: true
+  ios: true
+  android_12:
+    image: assets/images/logo_splash.png
+    icon_background_color: "#FFFFFF"
+  android_gravity: center
+  ios_content_mode: center
+  fullscreen: true
+  android_screen_orientation: portrait
+  
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/app_icon.png"
+  remove_alpha_ios: true

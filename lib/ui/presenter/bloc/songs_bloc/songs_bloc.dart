@@ -1,12 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:muz_bingo_app/core/enums/fetch_songs_mode.dart';
-import 'package:muz_bingo_app/domain/entity/song_entity.dart';
-import 'package:muz_bingo_app/domain/use_case/delete_song_usecase.dart';
-import 'package:muz_bingo_app/domain/use_case/get_songs_usecase.dart';
-import 'package:muz_bingo_app/domain/use_case/save_song_usecase.dart';
-import 'package:muz_bingo_app/domain/use_case/toggle_selection_usecase.dart';
-import 'package:muz_bingo_app/domain/use_case/update_song_usecase.dart';
+import 'package:muz_bingo_app/domain/entity/song/song_entity.dart';
+import 'package:muz_bingo_app/domain/use_case/songs_list/delete_song_usecase.dart';
+import 'package:muz_bingo_app/domain/use_case/songs_list/get_songs_usecase.dart';
+import 'package:muz_bingo_app/domain/use_case/songs_list/save_song_usecase.dart';
+import 'package:muz_bingo_app/domain/use_case/songs_list/toggle_selection_usecase.dart';
+import 'package:muz_bingo_app/domain/use_case/songs_list/update_song_usecase.dart';
 
 part 'songs_event.dart';
 part 'songs_state.dart';
@@ -41,14 +40,14 @@ class SongsBloc extends Bloc<SongsEvent, SongsState> {
   Future<void> _getSongs(_GetSongs event, Emitter<SongsState> emit) async {
     emit(state.copyWith(status: SongsListStateStatus.loading));
 
-    final result = await _getSongsUsecase.call(GetSongsUsecaseParams(mode: event.mode));
+    final result = await _getSongsUsecase.call(GetSongsUsecaseParams());
 
     result.fold(
       (l) {
         emit(state.copyWith(status: SongsListStateStatus.error, errorMessage: l.key));
       },
       (r) {
-        emit(state.copyWith(songs: r, status: SongsListStateStatus.success));
+        emit(state.copyWith(songs: r.all, selectedSongs: r.selected, status: SongsListStateStatus.success));
       },
     );
   }
@@ -61,7 +60,7 @@ class SongsBloc extends Bloc<SongsEvent, SongsState> {
       songName: event.songName,
       isSelected: event.isSelected,
     );
-    
+
     final result = await _saveSongUsecase.call(SaveSongUsecaseParams(song: song));
 
     result.fold(
@@ -70,7 +69,12 @@ class SongsBloc extends Bloc<SongsEvent, SongsState> {
       },
       (r) {
         final updatedSongs = List<SongEntity>.from(state.songs)..add(r);
-        emit(state.copyWith(songs: updatedSongs, status: SongsListStateStatus.success));
+        final updatedSelectedSongs = r.isSelected ? (List<SongEntity>.from(state.selectedSongs)..add(r)) : null;
+        SongsState newState = state.copyWith(songs: updatedSongs, status: SongsListStateStatus.success);
+        if (r.isSelected) {
+          newState = newState.copyWith(selectedSongs: updatedSelectedSongs!);
+        }
+        emit(newState);
       },
     );
   }
@@ -99,12 +103,24 @@ class SongsBloc extends Bloc<SongsEvent, SongsState> {
           ..removeAt(index)
           ..insert(index, updatedSong);
 
+        final updatedSelectedSongs = updatedSong.isSelected
+            ? (List<SongEntity>.from(state.selectedSongs)
+              ..removeAt(index)
+              ..insert(index, updatedSong))
+            : null;
+
         emit(
           state.copyWith(
             songs: updatedSongs,
             status: SongsListStateStatus.success,
           ),
         );
+
+        SongsState newState = state.copyWith(songs: updatedSongs, status: SongsListStateStatus.success);
+        if (updatedSong.isSelected) {
+          newState = newState.copyWith(selectedSongs: updatedSelectedSongs!);
+        }
+        emit(newState);
       },
     );
   }
@@ -120,8 +136,10 @@ class SongsBloc extends Bloc<SongsEvent, SongsState> {
       },
       (r) {
         final updatedSongs = List<SongEntity>.from(state.songs)..removeAt(event.index);
+        final updatedSelectedSongs = List<SongEntity>.from(state.selectedSongs)..removeWhere((e) => e.id == event.id);
 
-        emit(state.copyWith(songs: updatedSongs, status: SongsListStateStatus.success));
+        emit(state.copyWith(
+            songs: updatedSongs, selectedSongs: updatedSelectedSongs, status: SongsListStateStatus.success));
       },
     );
   }
@@ -136,16 +154,22 @@ class SongsBloc extends Bloc<SongsEvent, SongsState> {
         emit(state.copyWith(status: SongsListStateStatus.error, errorMessage: l.key));
       },
       (r) {
-        final updatedSong = state.songs.firstWhere((e) => e.id == event.id);
-        final int index = state.songs.indexOf(updatedSong);
+        final oldSong = state.songs.firstWhere((e) => e.id == event.id);
+        final int index = state.songs.indexOf(oldSong);
+        final toggledSong = oldSong.copyWith(isSelected: !oldSong.isSelected);
 
         final updatedSongs = List<SongEntity>.from(state.songs)
-          ..remove(updatedSong)
-          ..insert(index, updatedSong.copyWith(isSelected: !updatedSong.isSelected));
+          ..removeAt(index)
+          ..insert(index, toggledSong);
+
+        final updatedSelectedSongs = toggledSong.isSelected
+            ? [...state.selectedSongs, toggledSong]
+            : state.selectedSongs.where((e) => e.id != toggledSong.id).toList();
 
         emit(
           state.copyWith(
             songs: updatedSongs,
+            selectedSongs: updatedSelectedSongs,
             status: SongsListStateStatus.success,
           ),
         );

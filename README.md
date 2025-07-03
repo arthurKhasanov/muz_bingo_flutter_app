@@ -39,27 +39,11 @@ lib/
 
 ---
 
-## ✅ Test Coverage
-
-Fully tested repository layer:
-
-- `getSongs()`
-- `saveSong()`
-- `updateSong()`
-- `deleteSong()`
-- `toggleSelection()`
-- `getSelectedSongs()`
-
-> All tests follow AAA structure with `mockito`, `argThat`, `Right/Left`, and `safeCallMixin`.
-
----
-
 ## 🚀 Getting Started
 
 ```bash
 flutter pub get
 flutter packages pub run build_runner build --delete-conflicting-outputs
-flutter test
 ```
 
 ---
@@ -68,9 +52,7 @@ flutter test
 
 - [ ] Generate 90 unique bingo cards
 - [ ] Render bingo grid on screen
-- [ ] Track revealed songs during game
 - [ ] Export bingo cards as PDF
-- [ ] Add dark theme support
 
 ---
 
