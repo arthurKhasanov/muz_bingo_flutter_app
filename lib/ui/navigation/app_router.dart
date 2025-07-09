@@ -4,6 +4,7 @@ import 'package:muz_bingo_app/ui/navigation/app_route.dart';
 import 'package:muz_bingo_app/ui/pages/bingo_page.dart';
 import 'package:muz_bingo_app/ui/pages/bingo_set_view_page.dart';
 import 'package:muz_bingo_app/ui/pages/main_tab_page.dart';
+import 'package:muz_bingo_app/ui/pages/search_songs_page.dart';
 import 'package:muz_bingo_app/ui/pages/songs_page.dart';
 
 final GoRouter router = GoRouter(
@@ -19,10 +20,16 @@ final GoRouter router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: AppRoute.songs.path,
-              name: AppRoute.songs.name,
-              pageBuilder: (context, state) => const NoTransitionPage(child: SongsPage()),
-            ),
+                path: AppRoute.songs.path,
+                name: AppRoute.songs.name,
+                builder: (context, state) =>  SongsPage(),
+                routes: [
+                  GoRoute(
+                    path: AppRoute.searchSongs.path,
+                    name: AppRoute.searchSongs.name,
+                    builder: (context, state) => SearchSongsPageProvider(),
+                  )
+                ]),
           ],
         ),
         StatefulShellBranch(
@@ -30,7 +37,7 @@ final GoRouter router = GoRouter(
             GoRoute(
               path: AppRoute.bingo.path,
               name: AppRoute.bingo.name,
-              pageBuilder: (context, state) => const NoTransitionPage(child: BingoPage()),
+              builder: (context, state) =>  BingoPage(),
               routes: [
                 GoRoute(
                   path: AppRoute.bingoSet.path,

@@ -4,58 +4,65 @@ import 'package:flutter/material.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 
 class TrailingIconButton extends StatelessWidget {
-  const TrailingIconButton({super.key, this.pullDownActions});
+  const TrailingIconButton({
+    super.key,
+    required this.pullDownActions,
+    this.child,
+  });
 
-  final List<(String title, Widget iconWidget, VoidCallback onTap, Color? color)>? pullDownActions;
-
+  final List<({String title, Widget iconWidget, VoidCallback onTap, Color? color})>? pullDownActions;
+  
+  final Widget? child;
   @override
   Widget build(BuildContext context) {
     if (Platform.isIOS) {
       return PullDownButton(
         itemBuilder: (context) => pullDownActions!
             .map((e) => PullDownMenuItem(
-                  onTap: e.$3,
-                  title: e.$1,
-                  iconWidget: e.$2,
+                  onTap: e.onTap,
+                  title: e.title,
+                  iconWidget: e.iconWidget,
                   itemTheme: PullDownMenuItemTheme(
                       textStyle: TextStyle(
-                    color: e.$4,
+                    color: e.color,
                     fontSize: 17,
                   )),
                 ))
             .toList(),
         buttonBuilder: (context, showMenu) => GestureDetector(
           onTap: showMenu,
-          child: Icon(
-            Icons.more_vert,
-            size: 20,
-          ),
+          child: child ??
+              Icon(
+                Icons.more_vert,
+                size: 20,
+              ),
         ),
       );
     } else {
       return PopupMenuButton<String>(
         onSelected: (value) {
-          (pullDownActions!.firstWhere((e) => e.$1 == value)).$3();
+          (pullDownActions!.firstWhere((e) => e.title == value)).onTap();
         },
         itemBuilder: (BuildContext context) => pullDownActions!
             .map((e) => PopupMenuItem<String>(
-                  value: e.$1,
+                  value: e.title,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        e.$1,
-                        style: TextStyle(fontSize: 17, color: e.$4),
+                        e.title,
+                        style: TextStyle(fontSize: 17, color: e.color),
                       ),
-                      e.$2
+                      e.iconWidget
                     ],
                   ),
                 ))
             .toList(),
-        child: Icon(
-          Icons.more_vert,
-          size: 20,
-        ),
+        child: child ??
+            Icon(
+              Icons.more_vert,
+              size: 20,
+            ),
       );
     }
   }

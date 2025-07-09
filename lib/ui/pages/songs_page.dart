@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:muz_bingo_app/ui/navigation/app_route.dart';
 import 'package:muz_bingo_app/ui/presenter/bloc/songs_bloc/songs_bloc.dart';
 import 'package:muz_bingo_app/ui/widgets/create_bingo_set_bottom_sheet.dart';
 import 'package:muz_bingo_app/ui/widgets/song_text_field_bottom_sheet.dart';
@@ -42,7 +44,7 @@ class _SongsTabPageState extends State<SongsTabPage> with AutomaticKeepAliveClie
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this)..addListener(() => setState(() {}));
+    _tabController = TabController(length: 2, vsync: this)..addListener(() => {});
     super.initState();
   }
 
@@ -53,6 +55,17 @@ class _SongsTabPageState extends State<SongsTabPage> with AutomaticKeepAliveClie
     return Scaffold(
       appBar: AppBar(
         title: Text('Songs'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.goNamed(AppRoute.searchSongs.name);
+            },
+            icon: Hero(
+              tag: 'search_icon',
+              child: Icon(Icons.search),
+            ),
+          )
+        ],
       ),
       floatingActionButton: (_tabController.index == 1)
           ? FloatingActionButton.extended(

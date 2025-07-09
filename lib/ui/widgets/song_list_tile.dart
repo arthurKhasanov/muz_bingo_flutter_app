@@ -6,9 +6,10 @@ import 'package:muz_bingo_app/ui/widgets/song_text_field_bottom_sheet.dart';
 import 'package:muz_bingo_app/ui/widgets/trailing_icon_button.dart';
 
 class SongListTile extends StatelessWidget {
-  const SongListTile({super.key, required this.song, required this.index});
+  const SongListTile({super.key, required this.song, required this.index, this.callback});
   final int index;
   final SongEntity song;
+  final VoidCallback? callback;
 
   @override
   Widget build(BuildContext context) {
@@ -24,25 +25,28 @@ class SongListTile extends StatelessWidget {
               context.read<SongsBloc>().add(
                     SongsEvent.toggleSelection(id: song.id!),
                   );
+              if (callback != null) {
+                callback!();
+              }
             },
           ),
           TrailingIconButton(
             pullDownActions: [
               (
-                'Изменить',
-                Icon(Icons.edit),
-                () => SongTextFieldBottomSheetHelper.showAddSongBottomSheet(context, song),
-                null,
+                title: 'Изменить',
+                iconWidget: Icon(Icons.edit),
+                onTap: () => SongTextFieldBottomSheetHelper.showAddSongBottomSheet(context, song, null, callback),
+                color: null,
               ),
               (
-                'Удалить',
-                Icon(Icons.delete),
-                () {
+                title: 'Удалить',
+                iconWidget: Icon(Icons.delete),
+                onTap: () {
                   context.read<SongsBloc>().add(
                         SongsEvent.deleteSong(id: song.id!, index: index),
                       );
                 },
-                Colors.red,
+                color: Colors.red,
               ),
             ],
           )

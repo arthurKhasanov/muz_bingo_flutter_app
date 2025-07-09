@@ -7,14 +7,15 @@ import 'package:muz_bingo_app/ui/presenter/bloc/songs_bloc/songs_bloc.dart';
 import 'package:muz_bingo_app/utils/ui/app_flushbar.dart';
 
 class SongTextFieldBottomSheetHelper {
-  static void showAddSongBottomSheet(BuildContext screenContext, [SongEntity? song, int? index]) {
+  static void showAddSongBottomSheet(BuildContext screenContext,
+      [SongEntity? song, int? index, VoidCallback? callback]) {
     showModalBottomSheet(
       context: screenContext,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
-      builder: (context) => SongForm(screenContext, song: song, index: index),
+      builder: (context) => SongForm(screenContext, song: song, index: index, callback: callback),
     );
   }
 }
@@ -25,11 +26,13 @@ class SongForm extends StatefulWidget {
     super.key,
     required this.song,
     required this.index,
+    this.callback,
   });
 
   final SongEntity? song;
   final int? index;
   final BuildContext screenContext;
+  final VoidCallback? callback;
 
   @override
   State<SongForm> createState() => _SongFormState();
@@ -103,6 +106,7 @@ class _SongFormState extends State<SongForm> {
                 songName: songName,
                 artistName: artistName,
                 isSelected: isSelected,
+                callback: widget.callback,
               );
             },
             style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(48)),
@@ -119,6 +123,7 @@ class _SongFormState extends State<SongForm> {
     required String songName,
     required String artistName,
     required bool isSelected,
+    VoidCallback? callback,
   }) {
     if (songName.isEmpty || artistName.isEmpty) {
       AppFlushbar.show(context, message: 'Add Artist and Song names');
@@ -148,6 +153,7 @@ class _SongFormState extends State<SongForm> {
 
     if (widget.song!.isSelected != isSelected) {
       context.read<SongsBloc>().add(SongsEvent.toggleSelection(id: widget.song!.id!));
+      if (callback != null) callback();
       context.pop();
       return;
     }

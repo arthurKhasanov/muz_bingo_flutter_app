@@ -1,5 +1,6 @@
 import 'package:hive/hive.dart';
 import 'package:muz_bingo_app/core/enums/fetch_songs_mode.dart';
+import 'package:muz_bingo_app/core/enums/songs_search_type.dart';
 import 'package:muz_bingo_app/data/model/songs/song_model.dart';
 
 abstract class ISongLocalDataSource {
@@ -8,6 +9,7 @@ abstract class ISongLocalDataSource {
   Future<void> updateSong(int id, SongModel model);
   Future<void> deleteSong(int id);
   Future<void> toggleSelection(int id);
+  Future<List<SongModel>> searchSongs({required String query, required SongsSearchType type});
 }
 
 class SongLocalDataSourceImpl implements ISongLocalDataSource {
@@ -21,6 +23,21 @@ class SongLocalDataSourceImpl implements ISongLocalDataSource {
       return box.values.toList();
     } else {
       return box.values.where((e) => e.isSelected).toList();
+    }
+  }
+
+  @override
+  Future<List<SongModel>> searchSongs({required String query, required SongsSearchType type}) async {
+    if (type == SongsSearchType.artistName) {
+      return box.values.where((e) {
+        final a = e.artistName.toLowerCase().contains(query);
+        return a;
+      }).toList();
+    } else {
+      return box.values.where((e) {
+        final a = e.songName.toLowerCase().contains(query);
+        return a;
+      }).toList();
     }
   }
 

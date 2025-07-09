@@ -1,0 +1,1 @@
+enum SongsSearchType { artistName, songName }

@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:muz_bingo_app/core/constants/failure_message_contants.dart';
 import 'package:muz_bingo_app/core/enums/fetch_songs_mode.dart';
+import 'package:muz_bingo_app/core/enums/songs_search_type.dart';
 import 'package:muz_bingo_app/core/error/failure.dart';
 import 'package:muz_bingo_app/core/mixins/save_call_mixin.dart';
 import 'package:muz_bingo_app/data/model/songs/song_model.dart';
@@ -51,4 +52,14 @@ class SongsRepositoryImpl with SafeCallMixin implements ISongRepository {
   Future<Either<Failure, void>> toggleSelection(int id) => safeCall(() async {
         await localDatasource.toggleSelection(id);
       }, FailureMessageKeyContants.toggleSelectionError);
+
+  @override
+  Future<Either<Failure, List<SongEntity>>> searchSongs({required String query, required SongsSearchType type}) =>
+      safeCall(() async {
+        return (await localDatasource.searchSongs(query: query, type: type))
+            .asMap()
+            .entries
+            .map((e) => e.value.toEntity().copyWith(id: e.value.key))
+            .toList();
+      }, FailureMessageKeyContants.fetchSongsError);
 }
